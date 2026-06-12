@@ -224,9 +224,9 @@ export default function AetherHero({
       aria-label="Hero"
     >
       {/* Font import (Space Grotesk) */}
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
-      `}</style>
+      `}} />
 
       {/* Shader canvas (background) */}
       <canvas

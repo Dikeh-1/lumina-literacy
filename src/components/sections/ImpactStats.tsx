@@ -111,7 +111,7 @@ function StatCard({ stat, shouldAnimate }: { stat: StatItem; shouldAnimate: bool
 }
 
 export default function ImpactStats() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   // Interactive Spotlight

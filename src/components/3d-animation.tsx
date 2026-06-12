@@ -1,10 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 
+interface PoemAnimationProps {
+    poemHTML: string;
+    backgroundImageUrl: string;
+    boyImageUrl: string;
+}
+
 /**
  * Renders the 3D poem animation hero section.
  */
-export const PoemAnimation = ({ poemHTML, backgroundImageUrl, boyImageUrl }) => {
-    const contentRef = useRef(null);
+export const PoemAnimation = ({ poemHTML, backgroundImageUrl, boyImageUrl }: PoemAnimationProps) => {
+    const contentRef = useRef<HTMLDivElement>(null);
 
     // This effect handles the responsive scaling of the animation container.
     useEffect(() => {
@@ -32,8 +38,8 @@ export const PoemAnimation = ({ poemHTML, backgroundImageUrl, boyImageUrl }) => 
                 >
                     <div className="container-full">
                         <div className="animated hue"></div>
-                        <img className="backgroundImage" src={backgroundImageUrl} alt="An old stone courtyard at dawn" onError={(e) => e.target.style.display = 'none'} />
-                        <img className="boyImage" src={boyImageUrl} alt="A man and woman practicing with swords" onError={(e) => e.target.style.display = 'none'} />
+                        <img className="backgroundImage" src={backgroundImageUrl} alt="An old stone courtyard at dawn" onError={(e) => (e.target as HTMLImageElement).style.display = 'none'} />
+                        <img className="boyImage" src={boyImageUrl} alt="A man and woman practicing with swords" onError={(e) => (e.target as HTMLImageElement).style.display = 'none'} />
                         
                         <div className="container">
                             <div className="cube">
