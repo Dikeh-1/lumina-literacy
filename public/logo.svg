@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="200" viewBox="0 0 240 200">
+  <!-- Book base -->
+  <path d="M120 95 L40 80 L40 120 L120 135 Z" fill="#1B2D5E" stroke="#1B2D5E" stroke-width="1"/>
+  <path d="M120 95 L200 80 L200 120 L120 135 Z" fill="#2E4A93" stroke="#1B2D5E" stroke-width="1"/>
+  
+  <!-- Book pages (lighter) -->
+  <path d="M120 90 L50 77 L50 112 L120 127 Z" fill="#FFFCF7" stroke="#1B2D5E" stroke-width="0.5" opacity="0.3"/>
+  <path d="M120 90 L190 77 L190 112 L120 127 Z" fill="#FFFCF7" stroke="#1B2D5E" stroke-width="0.5" opacity="0.3"/>
+  
+  <!-- Book spine -->
+  <line x1="120" y1="88" x2="120" y2="138" stroke="#101B38" stroke-width="2"/>
+  
+  <!-- Golden rays emanating from book -->
+  <line x1="120" y1="75" x2="120" y2="25" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="120" y1="78" x2="85" y2="35" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+  <line x1="120" y1="78" x2="155" y2="35" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+  <line x1="120" y1="82" x2="65" y2="50" stroke="#E3C66D" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="120" y1="82" x2="175" y2="50" stroke="#E3C66D" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="120" y1="85" x2="50" y2="60" stroke="#E3C66D" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+  <line x1="120" y1="85" x2="190" y2="60" stroke="#E3C66D" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+  
+  <!-- Text: Lumina -->
+  <text x="120" y="168" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#C9A84C" letter-spacing="2">Lumina</text>
+  
+  <!-- Text: LITERACY SOLUTIONS LTD -->
+  <text x="120" y="188" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="600" fill="#A88426" letter-spacing="3.5">LITERACY SOLUTIONS LTD</text>
+</svg>
