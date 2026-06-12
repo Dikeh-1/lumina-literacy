@@ -51,14 +51,14 @@ export default function FounderShowcase() {
         </motion.h2>
 
         {/* Two-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-center max-w-5xl mx-auto">
           {/* LEFT SIDE — Portrait Area */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[380px] mx-auto lg:mx-0"
+            className="relative w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[380px] mx-auto lg:ml-auto lg:mr-0"
           >
             <div
               className="relative rounded-2xl overflow-hidden p-4"
