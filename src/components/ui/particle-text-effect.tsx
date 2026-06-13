@@ -65,7 +65,7 @@ class Particle {
 
     if (drawAsPoints) {
       ctx.fillStyle = `rgb(${r},${g},${b})`
-      ctx.fillRect(this.pos.x, this.pos.y, 2, 2)
+      ctx.fillRect(this.pos.x, this.pos.y, this.particleSize, this.particleSize)
     } else {
       ctx.fillStyle = `rgb(${r},${g},${b})`
       ctx.beginPath()
@@ -164,12 +164,15 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
     const particles = particlesRef.current
     let particleIndex = 0
 
-    // Original pixel step — 6 on desktop, 8 on mobile (keeps density high but manageable)
-    const pixelSteps = isMobile ? 8 : 6
+    // Proper grid sampling: step by X and Y to maintain text shape with fewer particles
+    const step = isMobile ? 9 : 5
 
     const coordsIndexes: number[] = []
-    for (let i = 0; i < pixels.length; i += pixelSteps * 4) {
-      if (pixels[i + 3] > 0) coordsIndexes.push(i)
+    for (let y = 0; y < canvas.height; y += step) {
+      for (let x = 0; x < canvas.width; x += step) {
+        const i = (y * canvas.width + x) * 4
+        if (pixels[i + 3] > 0) coordsIndexes.push(i)
+      }
     }
 
     // Shuffle for fluid formation (original behaviour)
