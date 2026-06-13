@@ -63,10 +63,9 @@ const ShaderCanvas = () => {
         return vec3(circle);
       }
       void main(){
-        /* Aspect-ratio correct: normalize around center using the HEIGHT dimension.
-           This keeps the animation perfectly circular but ensures it retains its full 
-           original vertical height on tall mobile screens. */
-        vec2 uv = (gl_FragCoord.xy - 0.5 * iResolution.xy) / iResolution.y + 0.5;
+        /* Original proportional mapping: scales to fit width and height exactly, 
+           allowing the animation to stretch gracefully as an ellipse to fit the container */
+        vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
         float mask = 0.0;
         float radius = .35;

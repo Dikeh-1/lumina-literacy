@@ -60,14 +60,14 @@ export function ScrollIndicator() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           onClick={handleClick}
-          className="fixed bottom-6 right-4 sm:bottom-8 sm:right-6 z-[120] flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-gradient-to-tr from-[#C9A84C] to-[#E3C66D] text-[#101B38] shadow-[0_4px_20px_rgba(201,168,76,0.4)] transition-all duration-300 hover:scale-110 active:scale-95 border border-[#FFFCF7]/20"
+          className="fixed bottom-6 right-4 sm:bottom-8 sm:right-6 z-[120] flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gradient-to-tr from-[#C9A84C] to-[#E3C66D] text-[#101B38] shadow-[0_4px_20px_rgba(201,168,76,0.4)] transition-all duration-300 hover:scale-110 active:scale-95 border border-[#FFFCF7]/20"
           aria-label={direction === "up" ? "Scroll to top" : "Scroll to bottom"}
         >
           <motion.div
             animate={{ y: direction === "up" ? [0, -3, 0] : [0, 3, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
           >
-            {direction === "up" ? <ArrowUp size={20} strokeWidth={2.5} className="sm:w-6 sm:h-6" /> : <ArrowDown size={20} strokeWidth={2.5} className="sm:w-6 sm:h-6" />}
+            {direction === "up" ? <ArrowUp size={16} strokeWidth={2.5} className="sm:w-5 sm:h-5" /> : <ArrowDown size={16} strokeWidth={2.5} className="sm:w-5 sm:h-5" />}
           </motion.div>
         </motion.button>
       )}
