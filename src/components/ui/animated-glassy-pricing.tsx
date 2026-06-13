@@ -233,7 +233,7 @@ export const ModernPricingPage = ({
 
   return (
     <section id="programs" className="relative bg-[#FBF8F2] text-[#101B38] py-32 w-full overflow-hidden">
-      {showAnimatedBackground && !isMobile && <ShaderCanvas />}
+      {showAnimatedBackground && <ShaderCanvas />}
       <div className="relative z-10 w-full flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-5xl mx-auto text-center mb-16">
           <p className="uppercase tracking-[0.2em] text-sm font-semibold text-[#C9A84C] mb-4">
