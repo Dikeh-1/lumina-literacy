@@ -55,7 +55,7 @@ export default function Navbar() {
             <motion.img
               src="/images/lumina-logo-nav.png"
               alt="Lumina Literacy Solutions"
-              animate={{ height: scrolled ? 68 : 92 }}
+              animate={{ height: scrolled ? 40 : 56 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="w-auto"
             />
