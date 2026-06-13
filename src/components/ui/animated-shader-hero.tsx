@@ -2,7 +2,6 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { useInView } from 'framer-motion';
-import { useInView } from 'framer-motion';
 
 // Types for component props
 export interface HeroProps {
