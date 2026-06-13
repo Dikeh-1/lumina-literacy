@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { useInView } from "framer-motion"
 
 interface Vector2D {
   x: number
@@ -142,25 +141,12 @@ interface ParticleTextEffectProps {
 const DEFAULT_WORDS = ["HELLO", "21st.dev", "ParticleTextEffect", "BY", "KAINXU"]
 
 export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffectProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(containerRef, { margin: "200px" })
-  const isInViewRef = useRef(isInView)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>(0)
   const particlesRef = useRef<Particle[]>([])
   const frameCountRef = useRef(0)
   const wordIndexRef = useRef(0)
   const mouseRef = useRef({ x: 0, y: 0, isPressed: false, isRightClick: false })
-
-  useEffect(() => {
-    isInViewRef.current = isInView
-    if (isInView) {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current)
-      animate()
-    } else {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current)
-    }
-  }, [isInView])
 
   const pixelSteps = 6
   const drawAsPoints = true
@@ -327,9 +313,7 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
       nextWord(words[wordIndexRef.current], canvas)
     }
 
-    if (isInViewRef.current) {
-      animationRef.current = requestAnimationFrame(animate)
-    }
+    animationRef.current = requestAnimationFrame(animate)
   }
 
   useEffect(() => {

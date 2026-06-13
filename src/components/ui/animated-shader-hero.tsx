@@ -67,7 +67,7 @@ void main(){gl_Position=position;}`;
       this.canvas = canvas;
       this.scale = scale;
       this.gl = canvas.getContext('webgl2')!;
-      this.gl.viewport(0, 0, canvas.width * scale, canvas.height * scale);
+      this.gl.viewport(0, 0, canvas.width, canvas.height);
       this.shaderSource = defaultShaderSource;
     }
 
@@ -96,7 +96,7 @@ void main(){gl_Position=position;}`;
 
     updateScale(scale: number) {
       this.scale = scale;
-      this.gl.viewport(0, 0, this.canvas.width * scale, this.canvas.height * scale);
+      this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     }
 
     compile(shader: WebGLShader, source: string) {
