@@ -63,13 +63,12 @@ const ShaderCanvas = () => {
         return vec3(circle);
       }
       void main(){
-        /* Use minimum dimension to ensure the circle fits cleanly within 
-           the container bounds without blowing out the edges horizontally */
-        float minDim = min(iResolution.x, iResolution.y);
-        vec2 uv = (gl_FragCoord.xy - 0.5 * iResolution.xy) / minDim + 0.5;
+        /* Proportional mapping makes an ellipse that scales exactly 
+           to the height and width of the cards container, stretching tall. */
+        vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
         float mask = 0.0;
-        float radius = .42;
+        float radius = .48;
         vec2 center = vec2(.5);
         mask += paintCircle(uv,center,radius,.035).r;
         mask += paintCircle(uv,center,radius-.018,.01).r;

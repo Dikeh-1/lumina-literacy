@@ -21,10 +21,10 @@ export const LampContainer = ({
     >
       <div className="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0 mt-32 md:mt-48">
         <motion.div
-          initial={{ opacity: 0.5, width: "15rem" }}
-          whileInView={{ opacity: 1, width: "30rem" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{
-            delay: 0.3,
+            delay: 0.1,
             duration: 0.8,
             ease: "easeInOut",
           }}
@@ -38,10 +38,10 @@ export const LampContainer = ({
         </motion.div>
         
         <motion.div
-          initial={{ opacity: 0.5, width: "15rem" }}
-          whileInView={{ opacity: 1, width: "30rem" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{
-            delay: 0.3,
+            delay: 0.1,
             duration: 0.8,
             ease: "easeInOut",
           }}
@@ -59,10 +59,10 @@ export const LampContainer = ({
         <div className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-[#C9A84C] opacity-30 blur-3xl"></div>
         
         <motion.div
-          initial={{ width: "8rem" }}
-          whileInView={{ width: "16rem" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{
-            delay: 0.3,
+            delay: 0.1,
             duration: 0.8,
             ease: "easeInOut",
           }}
@@ -85,10 +85,10 @@ export const LampContainer = ({
         )}
 
         <motion.div
-          initial={{ width: "15rem" }}
-          whileInView={{ width: "30rem" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{
-            delay: 0.3,
+            delay: 0.1,
             duration: 0.8,
             ease: "easeInOut",
           }}
