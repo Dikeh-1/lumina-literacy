@@ -2,38 +2,73 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
     <!-- SEO -->
     <title>Lumina Literacy Solutions — Where African Stories Build Brilliant Minds</title>
     <meta name="description" content="Lumina Literacy Solutions helps schools, educators and families transform literacy outcomes through culturally authentic African stories and evidence-based reading interventions. Based in Abuja, Nigeria." />
     <meta name="keywords" content="literacy, education, African stories, children's reading, Nigeria, Abuja, StoryBridges, reading intervention, teacher training" />
     <meta name="author" content="Lumina Literacy Solutions Ltd" />
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Lumina Literacy Solutions — Where African Stories Build Brilliant Minds" />
     <meta property="og:description" content="We help schools, educators and families transform literacy outcomes through culturally authentic African stories and evidence-based reading interventions." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_NG" />
     <meta property="og:site_name" content="Lumina Literacy Solutions" />
-    
+    <meta property="og:image" content="/android-chrome-512x512.png" />
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Lumina Literacy Solutions" />
     <meta name="twitter:description" content="Where African Stories Build Brilliant Minds" />
-    
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    
+    <meta name="twitter:image" content="/android-chrome-512x512.png" />
+
+    <!-- ===================== PWA ===================== -->
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Theme colors -->
+    <meta name="theme-color" content="#101B38" />
+    <meta name="msapplication-TileColor" content="#101B38" />
+    <meta name="msapplication-TileImage" content="/android-chrome-192x192.png" />
+
+    <!-- iOS Safari PWA meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Lumina" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png" />
+
+    <!-- iOS splash screens (key sizes) -->
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
     <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#1B2D5E" />
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js').then(
+            function (registration) {
+              console.log('[Lumina SW] Registered:', registration.scope);
+            },
+            function (err) {
+              console.warn('[Lumina SW] Registration failed:', err);
+            }
+          );
+        });
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

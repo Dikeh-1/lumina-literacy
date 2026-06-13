@@ -63,8 +63,11 @@ const ShaderCanvas = () => {
         return vec3(circle);
       }
       void main(){
-        vec2 uv = gl_FragCoord.xy/iResolution.xy;
-        uv.x *= 1.5; uv.x -= 0.25;
+        /* Aspect-ratio correct: normalize around center using the smaller
+           dimension so the ring is always circular, not stretched */
+        float minDim = min(iResolution.x, iResolution.y);
+        vec2 uv = (gl_FragCoord.xy - 0.5 * iResolution.xy) / minDim + 0.5;
+
         float mask = 0.0;
         float radius = .35;
         vec2 center = vec2(.5);
