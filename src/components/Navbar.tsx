@@ -29,12 +29,23 @@ export default function Navbar() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#101B38]/90 backdrop-blur-xl border-b border-[#C9A84C]/15 shadow-[0_1px_20px_rgba(0,0,0,0.3)]">
         <div className="max-w-7xl mx-auto px-4 md:px-10 flex items-center justify-between h-14 lg:h-16">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-3 flex-shrink-0">
+          <a href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
             <img
               src="https://res.cloudinary.com/dxvvzuu3n/image/upload/v1781340134/loooooo_pbkjvi.png"
               alt="Lumina Literacy Solutions"
-              className="h-8 lg:h-10 w-auto"
+              className="h-8 lg:h-10 w-auto flex-shrink-0"
             />
+            <div className="flex flex-col leading-none">
+              <span
+                className="text-white font-semibold text-sm lg:text-base tracking-wide"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                Lumina Literacy
+              </span>
+              <span className="text-[#C9A84C] text-[10px] lg:text-xs font-medium tracking-widest uppercase">
+                Solutions LTD
+              </span>
+            </div>
           </a>
 
           {/* Desktop Nav Links */}

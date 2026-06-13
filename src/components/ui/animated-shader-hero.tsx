@@ -33,11 +33,6 @@ const useShaderBackground = () => {
   const animationFrameRef = useRef<number>(0);
   const rendererRef = useRef<WebGLRenderer | null>(null);
   const pointersRef = useRef<PointerHandler | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
 
   const isInView = useInView(canvasRef, { margin: "200px" });
   const isInViewRef = useRef(isInView);
@@ -297,7 +292,6 @@ void main(){gl_Position=position;}`;
   };
 
   useEffect(() => {
-    if (isMobile) return; // DON'T INIT WEBGL ON MOBILE
     if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
@@ -328,9 +322,9 @@ void main(){gl_Position=position;}`;
         rendererRef.current.reset();
       }
     };
-  }, [isMobile]);
+  }, []);
 
-  return { canvasRef, isMobile };
+  return { canvasRef };
 };
 
 export const AnimatedShaderHero: React.FC<HeroProps> = ({
@@ -340,7 +334,7 @@ export const AnimatedShaderHero: React.FC<HeroProps> = ({
   buttons,
   className = ""
 }) => {
-  const { canvasRef, isMobile } = useShaderBackground();
+  const { canvasRef } = useShaderBackground();
 
   return (
     <div className={`relative w-full h-screen overflow-hidden bg-[#101B38] ${className}`}>
@@ -361,20 +355,12 @@ export const AnimatedShaderHero: React.FC<HeroProps> = ({
         .animation-delay-800 { animation-delay: 0.8s; }
       `}</style>
       
-      {isMobile ? (
-        <div 
-          className="absolute inset-0 w-full h-full opacity-80"
-          style={{ 
-            background: 'linear-gradient(135deg, #101B38 0%, #152244 50%, #0D1629 100%)' 
-          }}
-        />
-      ) : (
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full object-cover touch-none opacity-80"
-          style={{ background: '#101B38' }}
-        />
-      )}
+      {/* WebGL Shader canvas — shown on ALL devices */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full object-cover touch-none opacity-80"
+        style={{ background: '#101B38' }}
+      />
       
       {/* Film grain overlay */}
       <div 

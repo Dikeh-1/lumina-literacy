@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/heroes/HeroSection";
 import Footer from "./components/Footer";
 import { UnderMaintenanceModal } from "./components/ui/UnderMaintenanceModal";
+import { CookieConsent } from "./components/ui/CookieConsent";
 
 // Lazy load sections for performance
 const CertificationMarquee = lazy(() => import("./components/sections/CertificationMarquee"));
@@ -102,6 +103,7 @@ export default function App() {
       {!loaded && <PageLoader onDone={() => setLoaded(true)} />}
 
       <UnderMaintenanceModal />
+      <CookieConsent />
       <Navbar />
 
       {/* Hero */}
