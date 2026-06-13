@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
+import { useInView } from "framer-motion";
 
 // Vertex shader
 const vertexShaderSource = `
@@ -151,8 +152,19 @@ export default function ShaderCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const animationRef = useRef<number>(0);
+  
+  // Performance optimization: only render when in view
+  const isInView = useInView(canvasRef, { margin: "200px" });
+  const isInViewRef = useRef(isInView);
+
+  useEffect(() => {
+    isInViewRef.current = isInView;
+  }, [isInView]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
+    // Only process mouse if in view to save CPU
+    if (!isInViewRef.current) return;
+    
     mouseRef.current = {
       x: e.clientX / window.innerWidth,
       y: 1.0 - e.clientY / window.innerHeight,
@@ -194,7 +206,9 @@ export default function ShaderCanvas() {
 
     // Resize handler
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio, 1.5); // Cap for performance
+      // Lower DPR on mobile for massive performance boost
+      const maxDpr = window.innerWidth < 768 ? 1.0 : 1.5;
+      const dpr = Math.min(window.devicePixelRatio, maxDpr);
       canvas.width = canvas.clientWidth * dpr;
       canvas.height = canvas.clientHeight * dpr;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -202,12 +216,17 @@ export default function ShaderCanvas() {
 
     resize();
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     // Animation loop
     const startTime = performance.now();
 
     const render = () => {
+      animationRef.current = requestAnimationFrame(render);
+      
+      // Skip WebGL drawing if not in view
+      if (!isInViewRef.current) return;
+
       const elapsed = (performance.now() - startTime) / 1000;
 
       gl.useProgram(program);
@@ -221,8 +240,6 @@ export default function ShaderCanvas() {
       gl.uniform2f(mouseLocation, mouseRef.current.x, mouseRef.current.y);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-      animationRef.current = requestAnimationFrame(render);
     };
 
     render();

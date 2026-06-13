@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { useInView } from 'framer-motion';
 
 export type AetherHeroProps = {
   /* ---------- Hero content ---------- */
@@ -106,6 +107,14 @@ export default function AetherHero({
   const uniResRef = useRef<WebGLUniformLocation | null>(null);
   const rafRef = useRef<number | null>(null);
 
+  // Performance optimization: only render when in view
+  const isInView = useInView(canvasRef, { margin: "200px" });
+  const isInViewRef = useRef(isInView);
+
+  useEffect(() => {
+    isInViewRef.current = isInView;
+  }, [isInView]);
+
   // Compile helpers
   const compileShader = (gl: WebGL2RenderingContext, src: string, type: number) => {
     const sh = gl.createShader(type)!;
@@ -138,7 +147,7 @@ export default function AetherHero({
   // Init GL
   useEffect(() => {
     const canvas = canvasRef.current!;
-    const gl = canvas.getContext('webgl2', { alpha: true, antialias: true });
+    const gl = canvas.getContext('webgl2', { alpha: true, antialias: false }); // false for perf
     if (!gl) return;
     glRef.current = gl;
 
@@ -173,7 +182,9 @@ export default function AetherHero({
 
     // Size & DPR
     const fit = () => {
-      const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, dprMax));
+      // Lower DPR heavily on mobile to avoid throttling
+      const effectiveDprMax = window.innerWidth < 768 ? 1.0 : dprMax;
+      const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, effectiveDprMax));
       const rect = canvas.getBoundingClientRect();
       const cssW = Math.max(1, rect.width);
       const cssH = Math.max(1, rect.height);
@@ -192,13 +203,16 @@ export default function AetherHero({
 
     // RAF
     const loop = (now: number) => {
+      rafRef.current = requestAnimationFrame(loop);
+      
+      if (!isInViewRef.current) return; // Skip rendering if not visible
+      
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.useProgram(prog);
       gl.bindBuffer(gl.ARRAY_BUFFER, buf);
       if (uniResRef.current) gl.uniform2f(uniResRef.current, canvas.width, canvas.height);
       if (uniTimeRef.current) gl.uniform1f(uniTimeRef.current, now * 1e-3);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      rafRef.current = requestAnimationFrame(loop);
     };
     rafRef.current = requestAnimationFrame(loop);
 
