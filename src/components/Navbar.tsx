@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
+  { label: "Home", href: "/" },
   { label: "Programs", href: "#programs" },
   { label: "Impact", href: "#impact" },
   { label: "About", href: "#about" },
@@ -53,7 +53,7 @@ export default function Navbar() {
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
             <motion.img
-              src="/images/lumina-logo-nav.png"
+              src="https://res.cloudinary.com/dxvvzuu3n/image/upload/v1781340134/loooooo_pbkjvi.png"
               alt="Lumina Literacy Solutions"
               animate={{ height: scrolled ? 32 : 44 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
@@ -89,8 +89,8 @@ export default function Navbar() {
             transition={{ delay: 0.5, duration: 0.5 }}
             className="hidden lg:block"
           >
-            <a
-              href="#contact"
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('show-maintenance'))}
               className="group relative inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold tracking-wide rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_4px_20px_rgba(201,168,76,0.3)]"
               style={{
                 background: "linear-gradient(135deg, #C9A84C, #A88426)",
@@ -100,7 +100,7 @@ export default function Navbar() {
               <span className="relative z-10">Partner With Us</span>
               <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
               <div className="absolute inset-0 bg-gradient-to-r from-[#E3C66D] to-[#C9A84C] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </a>
+            </button>
           </motion.div>
 
           {/* Mobile Menu Button */}
@@ -181,12 +181,14 @@ export default function Navbar() {
                 </div>
 
                 <div className="mt-auto">
-                  <motion.a
+                  <motion.button
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    href="#contact"
-                    onClick={() => setMobileOpen(false)}
+                    onClick={() => {
+                      setMobileOpen(false);
+                      window.dispatchEvent(new CustomEvent('show-maintenance'));
+                    }}
                     className="flex items-center justify-center gap-2 w-full px-6 py-3.5 text-sm font-semibold tracking-wide rounded-full text-[#FFFCF7] transition-all duration-300"
                     style={{
                       background: "linear-gradient(135deg, #C9A84C, #A88426)",
@@ -194,7 +196,7 @@ export default function Navbar() {
                   >
                     Partner With Us
                     <ArrowRight className="w-4 h-4" />
-                  </motion.a>
+                  </motion.button>
 
                   <p className="text-center text-xs text-[#1B2D5E]/40 mt-6">
                     © 2026 Lumina Literacy Solutions Ltd

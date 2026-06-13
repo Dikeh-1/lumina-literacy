@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/heroes/HeroSection";
 import Footer from "./components/Footer";
+import { UnderMaintenanceModal } from "./components/ui/UnderMaintenanceModal";
 
 // Lazy load sections for performance
 const CertificationMarquee = lazy(() => import("./components/sections/CertificationMarquee"));
@@ -40,11 +41,14 @@ function SectionLoader() {
 export default function App() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#FBF8F2" }}>
+      <UnderMaintenanceModal />
       {/* Fixed Navbar */}
       <Navbar />
 
       {/* Hero Section: Shader Background + Spline Scene + Content */}
-      <HeroSection />
+      <div id="home">
+        <HeroSection />
+      </div>
 
       {/* Certification Badges Marquee */}
       <Suspense fallback={<SectionLoader />}>
@@ -53,12 +57,16 @@ export default function App() {
 
       {/* About Lumina */}
       <Suspense fallback={<SectionLoader />}>
-        <AboutLumina />
+        <div id="about">
+          <AboutLumina />
+        </div>
       </Suspense>
 
       {/* Impact Statistics */}
       <Suspense fallback={<SectionLoader />}>
-        <ImpactStats />
+        <div id="impact">
+          <ImpactStats />
+        </div>
       </Suspense>
 
       {/* StoryBridges+ Bento Grid */}
@@ -68,7 +76,9 @@ export default function App() {
 
       {/* Literacy Crisis - Scroll Storytelling */}
       <Suspense fallback={<SectionLoader />}>
-        <LiteracyCrisis />
+        <div id="challenge">
+          <LiteracyCrisis />
+        </div>
       </Suspense>
 
       {/* Lightning Split - The Song of Gurara */}
@@ -88,12 +98,16 @@ export default function App() {
 
       {/* Programs / Pricing */}
       <Suspense fallback={<SectionLoader />}>
-        <Programs />
+        <div id="programs">
+          <Programs />
+        </div>
       </Suspense>
 
       {/* CSR Section */}
       <Suspense fallback={<SectionLoader />}>
-        <CSRSection />
+        <div id="resources">
+          <CSRSection />
+        </div>
       </Suspense>
 
       {/* Testimonials */}

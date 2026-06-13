@@ -21,7 +21,7 @@ export default function HeroSection() {
           primary: {
             text: "Partner With Us",
             onClick: () => {
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              window.dispatchEvent(new CustomEvent('show-maintenance'));
             },
           },
           secondary: {

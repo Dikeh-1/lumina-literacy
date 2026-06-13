@@ -15,36 +15,45 @@ const quickLinks = [
   {
     title: "Programs",
     links: [
-      "School Adoption",
-      "StoryBridges+ Kit",
-      "Teacher Workshops",
-      "Reading Audits",
+      { label: "School Adoption", href: "#programs" },
+      { label: "StoryBridges+ Kit", href: "#programs" },
+      { label: "Teacher Workshops", href: "#programs" },
+      { label: "Reading Audits", href: "#programs" },
     ],
   },
   {
     title: "Resources",
     links: [
-      "The Song of Gurara",
-      "Impact Reports",
-      "Research & Insights",
-      "Blog",
+      { label: "The Song of Gurara", href: "https://wa.me/2348130309009?text=Hello%20Lumina%20Literacy,%20I%20would%20like%20to%20request%20a%20sample%20copy%20for%20Song%20of%20Gurara" },
+      { label: "Impact Reports", href: "#impact" },
+      { label: "Research & Insights", href: "#challenge" },
+      { label: "Blog", action: "maintenance" },
     ],
   },
   {
     title: "Company",
-    links: ["About Us", "Our Team", "Careers", "Press"],
+    links: [
+      { label: "About Us", href: "#about" }, 
+      { label: "Our Team", action: "maintenance" }, 
+      { label: "Careers", action: "maintenance" }, 
+      { label: "Press", action: "maintenance" }
+    ],
   },
   {
     title: "Legal",
-    links: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+    links: [
+      { label: "Privacy Policy", action: "maintenance" }, 
+      { label: "Terms of Service", action: "maintenance" }, 
+      { label: "Cookie Policy", action: "maintenance" }
+    ],
   },
 ];
 
 const socialLinks = [
-  { icon: MessageCircle, label: "Twitter/X", href: "#" },
-  { icon: Camera, label: "Instagram", href: "#" },
-  { icon: Link2, label: "LinkedIn", href: "#" },
-  { icon: Globe, label: "Facebook", href: "#" },
+  { icon: Globe, label: "Tales & Treasures", href: "https://talesandtreasures.com.ng", target: "_blank" },
+  { icon: MessageCircle, label: "Twitter/X", action: "maintenance" },
+  { icon: Camera, label: "Instagram", action: "maintenance" },
+  { icon: Link2, label: "LinkedIn", action: "maintenance" },
 ];
 
 export default function Footer() {
@@ -69,9 +78,9 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="bg-white inline-block p-2 rounded-xl mb-6">
+            <div className="bg-[#101B38] inline-block p-2 rounded-xl mb-6">
               <img
-                src="/images/lumina-logo-new-3.jpg"
+                src="https://res.cloudinary.com/dxvvzuu3n/image/upload/v1781340134/loooooo_pbkjvi.png"
                 alt="Lumina Literacy Solutions"
                 className="h-16 w-auto rounded-lg"
               />
@@ -119,8 +128,20 @@ export default function Footer() {
               insights delivered to your inbox.
             </p>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+                if (!email) return;
+                try {
+                  // Connect to tales & treasures newsletter backend
+                  await fetch('https://talesandtreasures.com.ng/api/newsletter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
+                alert("Thank you for subscribing!");
                 setEmail("");
               }}
               className="flex gap-3"
@@ -165,13 +186,23 @@ export default function Footer() {
               </h4>
               <ul className="flex flex-col gap-2.5">
                 {section.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm text-[#FFFCF7]/40 hover:text-[#C9A84C] transition-colors duration-300"
-                    >
-                      {link}
-                    </a>
+                  <li key={link.label}>
+                    {link.action === "maintenance" ? (
+                      <button
+                        onClick={() => window.dispatchEvent(new CustomEvent('show-maintenance'))}
+                        className="text-sm text-[#FFFCF7]/40 hover:text-[#C9A84C] transition-colors duration-300 text-left"
+                      >
+                        {link.label}
+                      </button>
+                    ) : (
+                      <a
+                        href={link.href}
+                        target={link.href?.startsWith('http') ? "_blank" : undefined}
+                        className="text-sm text-[#FFFCF7]/40 hover:text-[#C9A84C] transition-colors duration-300"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -184,14 +215,26 @@ export default function Footer() {
           {/* Social Links */}
           <div className="flex items-center gap-4">
             {socialLinks.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                aria-label={social.label}
-                className="w-9 h-9 rounded-full border border-white/[0.08] flex items-center justify-center text-[#FFFCF7]/30 hover:text-[#C9A84C] hover:border-[#C9A84C]/30 transition-all duration-300"
-              >
-                <social.icon className="w-4 h-4" />
-              </a>
+              social.action === "maintenance" ? (
+                <button
+                  key={social.label}
+                  onClick={() => window.dispatchEvent(new CustomEvent('show-maintenance'))}
+                  aria-label={social.label}
+                  className="w-9 h-9 rounded-full border border-white/[0.08] flex items-center justify-center text-[#FFFCF7]/30 hover:text-[#C9A84C] hover:border-[#C9A84C]/30 transition-all duration-300"
+                >
+                  <social.icon className="w-4 h-4" />
+                </button>
+              ) : (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target={social.target}
+                  aria-label={social.label}
+                  className="w-9 h-9 rounded-full border border-white/[0.08] flex items-center justify-center text-[#FFFCF7]/30 hover:text-[#C9A84C] hover:border-[#C9A84C]/30 transition-all duration-300"
+                >
+                  <social.icon className="w-4 h-4" />
+                </a>
+              )
             ))}
           </div>
 

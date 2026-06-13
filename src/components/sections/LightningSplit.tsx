@@ -398,7 +398,9 @@ export default function LightningSplit() {
 
               {/* CTA */}
               <motion.a
-                href="#contact"
+                href="https://wa.me/2348130309009?text=Hello%20Lumina%20Literacy,%20I%20would%20like%20to%20request%20a%20sample%20copy%20for%20Song%20of%20Gurara"
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-2 mt-8 px-6 py-3 text-sm font-semibold tracking-wide rounded-full transition-all duration-300"
                 style={{
                   background: "linear-gradient(135deg, #C9A84C, #A88426)",

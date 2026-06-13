@@ -201,7 +201,12 @@ export const PricingCard = ({
           </li>
         ))}
       </ul>
-      <RippleButton className={buttonClasses.trim()}>{buttonText}</RippleButton>
+      <RippleButton 
+        className={buttonClasses.trim()}
+        onClick={() => window.dispatchEvent(new CustomEvent('show-maintenance'))}
+      >
+        {buttonText}
+      </RippleButton>
     </div>
   );
 };
