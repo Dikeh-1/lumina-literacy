@@ -133,16 +133,21 @@ export default function Footer() {
                 if (!email) return;
                 try {
                   // Connect to tales & treasures newsletter backend
-                  await fetch('https://talesandtreasures.com.ng/api/newsletter', {
+                  const response = await fetch('https://api.talesandtreasures.com.ng/subscribers', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
                   });
+                  if (response.ok) {
+                    alert("Thank you for subscribing!");
+                    setEmail("");
+                  } else {
+                    alert("Something went wrong. Please try again.");
+                  }
                 } catch (error) {
                   console.error(error);
+                  alert("Network error. Please try again.");
                 }
-                alert("Thank you for subscribing!");
-                setEmail("");
               }}
               className="flex gap-3"
             >
