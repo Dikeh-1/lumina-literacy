@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useInView } from 'framer-motion';
 
 export type AetherHeroProps = {
@@ -107,9 +107,15 @@ export default function AetherHero({
   const uniResRef = useRef<WebGLUniformLocation | null>(null);
   const rafRef = useRef<number | null>(null);
 
+  const [isMobile, setIsMobile] = useState(false);
+  
   // Performance optimization: only render when in view
   const isInView = useInView(canvasRef, { margin: "200px" });
   const isInViewRef = useRef(isInView);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   useEffect(() => {
     isInViewRef.current = isInView;
@@ -146,6 +152,7 @@ export default function AetherHero({
 
   // Init GL
   useEffect(() => {
+    if (isMobile) return;
     const canvas = canvasRef.current!;
     const gl = canvas.getContext('webgl2', { alpha: true, antialias: false }); // false for perf
     if (!gl) return;
@@ -243,21 +250,34 @@ export default function AetherHero({
       `}} />
 
       {/* Shader canvas (background) */}
-      <canvas
-        ref={canvasRef}
-        className="aurora-canvas"
-        role="img"
-        aria-label={ariaLabel}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          display: 'block',
-          userSelect: 'none',
-          touchAction: 'none',
-        }}
-      />
+      {isMobile ? (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            display: 'block',
+            background: 'linear-gradient(135deg, #101B38 0%, #152244 50%, #0D1629 100%)'
+          }}
+        />
+      ) : (
+        <canvas
+          ref={canvasRef}
+          className="aurora-canvas"
+          role="img"
+          aria-label={ariaLabel}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            display: 'block',
+            userSelect: 'none',
+            touchAction: 'none',
+          }}
+        />
+      )}
 
       {/* Overlay gradient for readability */}
       <div

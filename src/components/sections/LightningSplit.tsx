@@ -144,6 +144,11 @@ export default function LightningSplit() {
   const [hoverProgress, setHoverProgress] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -209,7 +214,7 @@ export default function LightningSplit() {
         <div className="relative grid grid-cols-1 md:grid-cols-2 min-h-[500px] md:min-h-[600px] rounded-2xl overflow-hidden border border-[#C9A84C]/10">
           {/* Lightning Divider */}
           <div className="hidden md:block absolute inset-y-0 left-1/2 -translate-x-1/2 w-20 z-20">
-            <LightningCanvas hoverProgress={hoverProgress} />
+            {!isMobile && <LightningCanvas hoverProgress={hoverProgress} />}
           </div>
 
           {/* LEFT PANEL - Book Cover */}
