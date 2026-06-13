@@ -120,9 +120,13 @@ const ShaderCanvas = () => {
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+      // Size the WebGL canvas to the actual rendered element dimensions
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.round(rect.width);
+      const h = Math.round(rect.height);
+      canvas.width = w;
+      canvas.height = h;
+      gl.viewport(0, 0, w, h);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
