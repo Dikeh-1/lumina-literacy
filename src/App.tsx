@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import { UnderMaintenanceModal } from "./components/ui/UnderMaintenanceModal";
 import { CookieConsent } from "./components/ui/CookieConsent";
 import { ScrollIndicator } from "./components/ui/ScrollIndicator";
+import { LazySection } from "./components/ui/LazySection";
 
 // Lazy load sections for performance
 const CertificationMarquee = lazy(() => import("./components/sections/CertificationMarquee"));
@@ -114,69 +115,91 @@ export default function App() {
       </div>
 
       {/* Certification Badges Marquee */}
-      <Suspense fallback={<SectionLoader />}>
-        <CertificationMarquee />
-      </Suspense>
+      <LazySection height="15vh">
+        <Suspense fallback={<SectionLoader />}>
+          <CertificationMarquee />
+        </Suspense>
+      </LazySection>
 
       {/* About Lumina */}
-      <Suspense fallback={<SectionLoader />}>
-        <div id="about">
-          <AboutLumina />
-        </div>
-      </Suspense>
+      <LazySection height="80vh">
+        <Suspense fallback={<SectionLoader />}>
+          <div id="about">
+            <AboutLumina />
+          </div>
+        </Suspense>
+      </LazySection>
 
       {/* Impact Statistics */}
-      <Suspense fallback={<SectionLoader />}>
-        <div id="impact">
-          <ImpactStats />
-        </div>
-      </Suspense>
+      <LazySection height="40vh">
+        <Suspense fallback={<SectionLoader />}>
+          <div id="impact">
+            <ImpactStats />
+          </div>
+        </Suspense>
+      </LazySection>
 
       {/* StoryBridges+ Bento Grid */}
-      <Suspense fallback={<SectionLoader />}>
-        <StoryBridges />
-      </Suspense>
+      <LazySection height="100vh">
+        <Suspense fallback={<SectionLoader />}>
+          <StoryBridges />
+        </Suspense>
+      </LazySection>
 
       {/* Literacy Crisis */}
-      <Suspense fallback={<SectionLoader />}>
-        <div id="challenge">
-          <LiteracyCrisis />
-        </div>
-      </Suspense>
+      <LazySection height="100vh">
+        <Suspense fallback={<SectionLoader />}>
+          <div id="challenge">
+            <LiteracyCrisis />
+          </div>
+        </Suspense>
+      </LazySection>
 
       {/* Lightning Split - The Song of Gurara */}
-      <Suspense fallback={<SectionLoader />}>
-        <LightningSplit />
-      </Suspense>
+      <LazySection height="80vh">
+        <Suspense fallback={<SectionLoader />}>
+          <LightningSplit />
+        </Suspense>
+      </LazySection>
 
       {/* Founder Showcase */}
-      <Suspense fallback={<SectionLoader />}>
-        <FounderShowcase />
-      </Suspense>
+      <LazySection height="80vh">
+        <Suspense fallback={<SectionLoader />}>
+          <FounderShowcase />
+        </Suspense>
+      </LazySection>
 
       {/* Pilot Impact Data */}
-      <Suspense fallback={<SectionLoader />}>
-        <PilotImpact />
-      </Suspense>
+      <LazySection height="80vh">
+        <Suspense fallback={<SectionLoader />}>
+          <PilotImpact />
+        </Suspense>
+      </LazySection>
 
       {/* Programs / Pricing */}
-      <Suspense fallback={<SectionLoader />}>
-        <div id="programs">
-          <Programs />
-        </div>
-      </Suspense>
+      <LazySection height="120vh">
+        <Suspense fallback={<SectionLoader />}>
+          <div id="programs">
+            <Programs />
+          </div>
+        </Suspense>
+      </LazySection>
 
       {/* CSR Section */}
-      <Suspense fallback={<SectionLoader />}>
-        <div id="resources">
-          <CSRSection />
-        </div>
-      </Suspense>
+      <LazySection height="80vh">
+        <Suspense fallback={<SectionLoader />}>
+          <div id="resources">
+            <CSRSection />
+          </div>
+        </Suspense>
+      </LazySection>
 
       {/* Testimonials */}
-      <Suspense fallback={<SectionLoader />}>
-        <Testimonials />
-      </Suspense>
+      <LazySection height="60vh">
+        <Suspense fallback={<SectionLoader />}>
+          <Testimonials />
+        </Suspense>
+      </LazySection>
 
       {/* Footer */}
       <Footer />
