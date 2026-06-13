@@ -4,6 +4,7 @@ import HeroSection from "./components/heroes/HeroSection";
 import Footer from "./components/Footer";
 import { UnderMaintenanceModal } from "./components/ui/UnderMaintenanceModal";
 import { CookieConsent } from "./components/ui/CookieConsent";
+import { ScrollIndicator } from "./components/ui/ScrollIndicator";
 
 // Lazy load sections for performance
 const CertificationMarquee = lazy(() => import("./components/sections/CertificationMarquee"));
@@ -104,6 +105,7 @@ export default function App() {
 
       <UnderMaintenanceModal />
       <CookieConsent />
+      <ScrollIndicator />
       <Navbar />
 
       {/* Hero */}

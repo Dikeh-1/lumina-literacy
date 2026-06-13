@@ -61,12 +61,11 @@ const ShaderCanvas = () => {
         len -= variation(diff,vec2(1.,0.),5.,2.);
         float circle = smoothstep(rad-width,rad,len)-smoothstep(rad,rad+width,len);
         return vec3(circle);
-      }
       void main(){
-        /* Aspect-ratio correct: normalize around center using the smaller
-           dimension so the ring is always circular, not stretched */
-        float minDim = min(iResolution.x, iResolution.y);
-        vec2 uv = (gl_FragCoord.xy - 0.5 * iResolution.xy) / minDim + 0.5;
+        /* Aspect-ratio correct: normalize around center using the HEIGHT dimension.
+           This keeps the animation perfectly circular but ensures it retains its full 
+           original vertical height on tall mobile screens. */
+        vec2 uv = (gl_FragCoord.xy - 0.5 * iResolution.xy) / iResolution.y + 0.5;
 
         float mask = 0.0;
         float radius = .35;
