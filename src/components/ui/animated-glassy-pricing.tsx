@@ -61,6 +61,7 @@ const ShaderCanvas = () => {
         len -= variation(diff,vec2(1.,0.),5.,2.);
         float circle = smoothstep(rad-width,rad,len)-smoothstep(rad,rad+width,len);
         return vec3(circle);
+      }
       void main(){
         /* Aspect-ratio correct: normalize around center using the HEIGHT dimension.
            This keeps the animation perfectly circular but ensures it retains its full 
