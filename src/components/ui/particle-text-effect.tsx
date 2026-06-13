@@ -157,7 +157,7 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
 
   useEffect(() => {
     // Massive performance boost for mobile by reducing particles
-    pixelStepsRef.current = window.innerWidth < 768 ? 12 : 6
+    pixelStepsRef.current = window.innerWidth < 768 ? 24 : 12
   }, [])
 
   const drawAsPoints = true
@@ -210,54 +210,61 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
     const coordsIndexes: number[] = []
     const step = pixelStepsRef.current
     for (let i = 0; i < pixels.length; i += step * 4) {
-      coordsIndexes.push(i)
+      if (pixels[i + 3] > 0) {
+        coordsIndexes.push(i)
+      }
     }
 
     for (let i = coordsIndexes.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
       ;[coordsIndexes[i], coordsIndexes[j]] = [coordsIndexes[j], coordsIndexes[i]]
     }
+    
+    const maxParticles = window.innerWidth < 768 ? 200 : 700;
+    if (coordsIndexes.length > maxParticles) {
+      coordsIndexes.length = maxParticles;
+    }
 
     for (const coordIndex of coordsIndexes) {
       const pixelIndex = coordIndex
-      const alpha = pixels[pixelIndex + 3]
 
-      if (alpha > 0) {
-        const x = (pixelIndex / 4) % canvas.width
-        const y = Math.floor(pixelIndex / 4 / canvas.width)
+      const x = (pixelIndex / 4) % canvas.width
+      const y = Math.floor(pixelIndex / 4 / canvas.width)
 
-        let particle: Particle
+      let particle: Particle
 
-        if (particleIndex < particles.length) {
-          particle = particles[particleIndex]
-          particle.isKilled = false
-          particleIndex++
-        } else {
-          particle = new Particle()
+      if (particleIndex < particles.length) {
+        particle = particles[particleIndex]
+        particle.isKilled = false
+        particleIndex++
+      } else {
+        particle = new Particle()
 
-          const randomPos = generateRandomPos(canvas.width / 2, canvas.height / 2, (canvas.width + canvas.height) / 2)
-          particle.pos.x = randomPos.x
-          particle.pos.y = randomPos.y
+        const randomPos = generateRandomPos(canvas.width / 2, canvas.height / 2, (canvas.width + canvas.height) / 2)
+        particle.pos.x = randomPos.x
+        particle.pos.y = randomPos.y
 
-          particle.maxSpeed = Math.random() * 6 + 4
-          particle.maxForce = particle.maxSpeed * 0.05
-          particle.particleSize = Math.random() * 6 + 6
-          particle.colorBlendRate = Math.random() * 0.0275 + 0.0025
+        particle.maxSpeed = Math.random() * 6 + 4
+        particle.maxForce = particle.maxSpeed * 0.05
+        
+        // Slightly larger particles on mobile since there are fewer of them
+        const isMobile = window.innerWidth < 768;
+        particle.particleSize = isMobile ? (Math.random() * 8 + 8) : (Math.random() * 6 + 6);
+        particle.colorBlendRate = Math.random() * 0.0275 + 0.0025
 
-          particles.push(particle)
-        }
-
-        particle.startColor = {
-          r: particle.startColor.r + (particle.targetColor.r - particle.startColor.r) * particle.colorWeight,
-          g: particle.startColor.g + (particle.targetColor.g - particle.startColor.g) * particle.colorWeight,
-          b: particle.startColor.b + (particle.targetColor.b - particle.startColor.b) * particle.colorWeight,
-        }
-        particle.targetColor = newColor
-        particle.colorWeight = 0
-
-        particle.target.x = x
-        particle.target.y = y
+        particles.push(particle)
       }
+
+      particle.startColor = {
+        r: particle.startColor.r + (particle.targetColor.r - particle.startColor.r) * particle.colorWeight,
+        g: particle.startColor.g + (particle.targetColor.g - particle.startColor.g) * particle.colorWeight,
+        b: particle.startColor.b + (particle.targetColor.b - particle.startColor.b) * particle.colorWeight,
+      }
+      particle.targetColor = newColor
+      particle.colorWeight = 0
+
+      particle.target.x = x
+      particle.target.y = y
     }
 
     for (let i = particleIndex; i < particles.length; i++) {
