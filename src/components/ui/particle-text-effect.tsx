@@ -164,8 +164,9 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
     const particles = particlesRef.current
     let particleIndex = 0
 
-    // Proper grid sampling: step by X and Y to maintain text shape with fewer particles
-    const step = isMobile ? 9 : 5
+    // High density grid sampling for maximum readability. 
+    // Uses a step of 4 to generate thousands of particles (looks perfectly smooth because of fillRect speedup)
+    const step = 4
 
     const coordsIndexes: number[] = []
     for (let y = 0; y < canvas.height; y += step) {

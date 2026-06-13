@@ -4,10 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export function ScrollIndicator() {
   const [direction, setDirection] = useState<"up" | "down" | null>(null);
+  const [isScrolling, setIsScrolling] = useState(false);
   const lastScrollY = useRef(0);
+  const scrollTimeout = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
+      setIsScrolling(true);
+      
       const currentScrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
@@ -30,6 +34,12 @@ export function ScrollIndicator() {
       }
 
       lastScrollY.current = currentScrollY;
+
+      // Hide indicator after scrolling stops
+      if (scrollTimeout.current) window.clearTimeout(scrollTimeout.current);
+      scrollTimeout.current = window.setTimeout(() => {
+        setIsScrolling(false);
+      }, 1500);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -41,7 +51,10 @@ export function ScrollIndicator() {
       setDirection("down");
     }
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout.current) window.clearTimeout(scrollTimeout.current);
+    };
   }, []);
 
   const handleClick = () => {
@@ -54,7 +67,7 @@ export function ScrollIndicator() {
 
   return (
     <AnimatePresence>
-      {direction && (
+      {direction && isScrolling && (
         <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

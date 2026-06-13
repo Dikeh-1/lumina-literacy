@@ -63,12 +63,13 @@ const ShaderCanvas = () => {
         return vec3(circle);
       }
       void main(){
-        /* Original proportional mapping: scales to fit width and height exactly, 
-           allowing the animation to stretch gracefully as an ellipse to fit the container */
-        vec2 uv = gl_FragCoord.xy / iResolution.xy;
+        /* Use minimum dimension to ensure the circle fits cleanly within 
+           the container bounds without blowing out the edges horizontally */
+        float minDim = min(iResolution.x, iResolution.y);
+        vec2 uv = (gl_FragCoord.xy - 0.5 * iResolution.xy) / minDim + 0.5;
 
         float mask = 0.0;
-        float radius = .35;
+        float radius = .42;
         vec2 center = vec2(.5);
         mask += paintCircle(uv,center,radius,.035).r;
         mask += paintCircle(uv,center,radius-.018,.01).r;
