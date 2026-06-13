@@ -3,80 +3,172 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lumina Literacy Solutions - CSR Brochure Sample</title>
+  <title>Lumina Literacy Solutions - CSR Brochure</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
-    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      padding: 0;
       background-color: #101B38;
       color: #FFFCF7;
       font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    /* Navbar */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(16, 27, 56, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+      padding: 0 1.5rem;
       display: flex;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav img { height: 32px; width: auto; }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #C9A84C;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-back:hover { background: rgba(201, 168, 76, 0.12); color: #E3C66D; }
+    .nav-back svg { width: 16px; height: 16px; }
+    /* Content */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
-
-    .container {
-      max-width: 800px;
-      padding: 4rem 2rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(201, 168, 76, 0.2);
-      border-radius: 24px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
-
-    img {
-      height: 80px;
-      border-radius: 12px;
-      margin-bottom: 2rem;
-    }
-
     h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem;
-      margin: 0 0 1rem;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 700;
       background: linear-gradient(135deg, #FFFCF7 0%, #C9A84C 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      margin: 2rem 0 1rem;
+      line-height: 1.2;
     }
-
-    p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: rgba(255, 252, 247, 0.7);
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #C9A84C;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 0;
+    }
+    .lead {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(255, 252, 247, 0.65);
       margin-bottom: 2rem;
     }
-
-    .message {
+    .card {
+      width: 100%;
       padding: 1.5rem;
-      background: rgba(201, 168, 76, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+    .card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: #E3C66D;
+      margin-bottom: 0.4rem;
+    }
+    .card p { font-size: 0.9rem; color: rgba(255,252,247,0.55); line-height: 1.6; }
+    .highlight {
+      padding: 1.5rem;
+      background: rgba(201, 168, 76, 0.08);
       border-left: 4px solid #C9A84C;
       border-radius: 0 12px 12px 0;
       font-style: italic;
       color: #C9A84C;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-top: 1rem;
     }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding: 0.9rem 2rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #C9A84C, #A88426);
+      color: #101B38;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .cta:hover { opacity: 0.9; transform: scale(1.02); }
   </style>
 </head>
 <body>
+  <!-- Navbar with back button -->
+  <nav class="nav">
+    <img src="https://res.cloudinary.com/dxvvzuu3n/image/upload/v1781340134/loooooo_pbkjvi.png" alt="Lumina Literacy Solutions">
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Back to Site
+    </a>
+  </nav>
 
   <div class="container">
-    <img src="https://res.cloudinary.com/dxvvzuu3n/image/upload/v1781340134/loooooo_pbkjvi.png" alt="Lumina Logo">
-    <h1>Corporate Social Responsibility Brochure</h1>
-    <p>
-      Thank you for your interest in partnering with Lumina Literacy Solutions! <br><br>
-      Our full interactive CSR Brochure is currently being updated by our design team to include our latest impact metrics for 2026. 
-      It will feature detailed breakdowns of our School Adoption programs, StoryBridges+ Kits, and partnership tiers.
+    <span class="badge">CSR Brochure — Sample Preview</span>
+    <h1>Fund Literacy.<br>Transform Futures.</h1>
+    <p class="lead">
+      Thank you for your interest in partnering with Lumina Literacy Solutions!
+      Our full interactive CSR Brochure is being finalized by our design team with our latest 2026 impact metrics.
     </p>
-    
-    <div class="message">
-      "Fund Literacy. Transform Futures. The complete brochure will be available for download here very soon."
-    </div>
-  </div>
 
+    <div class="card">
+      <h3>🏫 School Adoption Program</h3>
+      <p>Transform your school's entire literacy framework. Includes school-wide reading assessments, a customised literacy curriculum, full staff training (up to 20 teachers), library stocking & setup, and year-round monitoring & reporting. Starting at ₦350,000/year.</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 StoryBridges+ Kit</h3>
+      <p>A complete culturally immersive reading kit for your classroom. 20 curated African storybooks, AR-enabled interactive flashcards, teacher implementation guide, and 1-term dedicated support. Starting at ₦45,000.</p>
+    </div>
+
+    <div class="card">
+      <h3>🎓 Teacher Workshop</h3>
+      <p>Empowering educators with culturally responsive pedagogy. Full-day intensive workshop, Lumina Educator Certificate, access to the Lumina educator community, and modern storytelling techniques. ₦25,000 per educator.</p>
+    </div>
+
+    <div class="highlight">
+      "Every contribution creates lasting change. When a child reads a story that reflects their world, they don't just learn to read — they learn to believe in themselves."
+      <br><br>— Blessing Michael, Founder & CEO
+    </div>
+
+    <a href="https://wa.me/2348130309009?text=Hello%20Lumina%20Literacy,%20I%20am%20interested%20in%20your%20CSR%20partnership%20brochure" class="cta" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      Contact Us on WhatsApp
+    </a>
+  </div>
 </body>
 </html>

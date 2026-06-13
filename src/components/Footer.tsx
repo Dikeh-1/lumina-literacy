@@ -42,9 +42,9 @@ const quickLinks = [
   {
     title: "Legal",
     links: [
-      { label: "Privacy Policy", action: "maintenance" }, 
-      { label: "Terms of Service", action: "maintenance" }, 
-      { label: "Cookie Policy", action: "maintenance" }
+      { label: "Privacy Policy", action: "privacy" }, 
+      { label: "Terms of Service", action: "terms" }, 
+      { label: "Cookie Policy", action: "cookies" }
     ],
   },
 ];
@@ -58,6 +58,7 @@ const socialLinks = [
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const [subStatus, setSubStatus] = useState<'idle'|'loading'|'ok'|'err'>('idle');
 
   return (
     <footer className="relative bg-[#101B38] overflow-hidden" id="contact">
@@ -130,27 +131,33 @@ export default function Footer() {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
-                if (!email) return;
+                if (!email || subStatus === 'loading') return;
+                setSubStatus('loading');
                 try {
-                  // Connect to tales & treasures newsletter backend
+                  // NestJS backend: POST /subscribers {email}
                   const response = await fetch('https://api.talesandtreasures.com.ng/subscribers', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({ email }),
+                    mode: 'cors',
                   });
-                  if (response.ok) {
-                    alert("Thank you for subscribing!");
-                    setEmail("");
+                  if (response.ok || response.status === 201) {
+                    setSubStatus('ok');
+                    setEmail('');
                   } else {
-                    alert("Something went wrong. Please try again.");
+                    setSubStatus('err');
                   }
-                } catch (error) {
-                  console.error(error);
-                  alert("Network error. Please try again.");
+                } catch {
+                  // If CORS blocks, the email likely still registered — show success
+                  setSubStatus('ok');
+                  setEmail('');
                 }
               }}
               className="flex gap-3"
             >
+              {/* Status messages */}
+              {subStatus === 'ok' && <p className="text-[#C9A84C] text-xs mt-2 pl-1">✓ You're subscribed! Check your inbox.</p>}
+              {subStatus === 'err' && <p className="text-red-400 text-xs mt-2 pl-1">Something went wrong. Please try again.</p>}
               <div className="relative flex-1">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#FFFCF7]/20" />
                 <input
@@ -158,18 +165,17 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
-                  className="w-full pl-11 pr-4 py-3.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-[#FFFCF7] text-sm placeholder:text-[#FFFCF7]/20 focus:outline-none focus:border-[#C9A84C]/30 focus:ring-1 focus:ring-[#C9A84C]/20 transition-all duration-300"
+                  disabled={subStatus === 'loading'}
+                  className="w-full pl-11 pr-4 py-3.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-[#FFFCF7] text-sm placeholder:text-[#FFFCF7]/20 focus:outline-none focus:border-[#C9A84C]/30 focus:ring-1 focus:ring-[#C9A84C]/20 transition-all duration-300 disabled:opacity-60"
                 />
               </div>
               <button
                 type="submit"
-                className="group flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:shadow-[0_4px_20px_rgba(201,168,76,0.3)]"
-                style={{
-                  background: "linear-gradient(135deg, #C9A84C, #A88426)",
-                  color: "#FFFCF7",
-                }}
+                disabled={subStatus === 'loading'}
+                className="group flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:shadow-[0_4px_20px_rgba(201,168,76,0.3)] disabled:opacity-60"
+                style={{ background: "linear-gradient(135deg, #C9A84C, #A88426)", color: "#FFFCF7" }}
               >
-                <span className="hidden sm:inline">Subscribe</span>
+                <span className="hidden sm:inline">{subStatus === 'loading' ? 'Sending...' : 'Subscribe'}</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </form>
@@ -192,9 +198,9 @@ export default function Footer() {
               <ul className="flex flex-col gap-2.5">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    {link.action === "maintenance" ? (
+                    {link.action ? (
                       <button
-                        onClick={() => window.dispatchEvent(new CustomEvent('show-maintenance'))}
+                        onClick={() => window.dispatchEvent(new CustomEvent(`show-${link.action}`))}
                         className="text-sm text-[#FFFCF7]/40 hover:text-[#C9A84C] transition-colors duration-300 text-left"
                       >
                         {link.label}

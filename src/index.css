@@ -27,6 +27,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     @apply font-sans;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   body {
@@ -34,6 +36,8 @@
     background-color: var(--color-cream);
     color: var(--color-deep-navy);
     overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
     @apply bg-background text-foreground;
   }
 
