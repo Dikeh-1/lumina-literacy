@@ -82,7 +82,7 @@ class Particle {
 
     if (drawAsPoints) {
       ctx.fillStyle = `rgb(${currentColor.r}, ${currentColor.g}, ${currentColor.b})`
-      ctx.fillRect(this.pos.x, this.pos.y, 2, 2)
+      ctx.fillRect(this.pos.x, this.pos.y, this.particleSize, this.particleSize)
     } else {
       ctx.fillStyle = `rgb(${currentColor.r}, ${currentColor.g}, ${currentColor.b})`
       ctx.beginPath()
@@ -157,7 +157,7 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
 
   useEffect(() => {
     // Massive performance boost for mobile by reducing particles
-    pixelStepsRef.current = window.innerWidth < 768 ? 24 : 12
+    pixelStepsRef.current = window.innerWidth < 768 ? 12 : 6
   }, [])
 
   const drawAsPoints = true
@@ -220,7 +220,7 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
       ;[coordsIndexes[i], coordsIndexes[j]] = [coordsIndexes[j], coordsIndexes[i]]
     }
     
-    const maxParticles = window.innerWidth < 768 ? 200 : 700;
+    const maxParticles = window.innerWidth < 768 ? 600 : 2000;
     if (coordsIndexes.length > maxParticles) {
       coordsIndexes.length = maxParticles;
     }
@@ -247,9 +247,9 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
         particle.maxSpeed = Math.random() * 6 + 4
         particle.maxForce = particle.maxSpeed * 0.05
         
-        // Slightly larger particles on mobile since there are fewer of them
+        // Use larger rectangles on mobile to fill in the gaps left by fewer particles
         const isMobile = window.innerWidth < 768;
-        particle.particleSize = isMobile ? (Math.random() * 8 + 8) : (Math.random() * 6 + 6);
+        particle.particleSize = isMobile ? (Math.random() * 4 + 3) : (Math.random() * 3 + 2);
         particle.colorBlendRate = Math.random() * 0.0275 + 0.0025
 
         particles.push(particle)
@@ -283,7 +283,7 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
     const ctx = canvas.getContext("2d")!
     const particles = particlesRef.current
 
-    ctx.fillStyle = "rgba(0, 0, 0, 0.1)"
+    ctx.fillStyle = "rgba(0, 0, 0, 0.25)"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     for (let i = particles.length - 1; i >= 0; i--) {
