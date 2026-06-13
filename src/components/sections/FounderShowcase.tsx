@@ -167,6 +167,7 @@ export default function FounderShowcase() {
                 transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
                 src="https://res.cloudinary.com/dxvvzuu3n/image/upload/v1774778904/tales-and-treasures/r6ccdnycavj2xaxml88y.jpg"
                 alt="Blessing Michael - Founder of Lumina Literacy"
+                loading="lazy"
                 className="relative w-full h-auto rounded-xl shadow-md z-10"
               />
 

@@ -13,7 +13,7 @@ export function LazySection({ children, height = "50vh", id }: { children: React
           observer.disconnect();
         }
       },
-      { rootMargin: "400px" } // Load 400px before it comes into view
+      { rootMargin: "1500px" } // Load far before it comes into view to prevent CLS
     );
     
     if (ref.current) observer.observe(ref.current);
@@ -22,7 +22,7 @@ export function LazySection({ children, height = "50vh", id }: { children: React
   }, []);
 
   return (
-    <div ref={ref} id={id} style={{ minHeight: isVisible ? "auto" : height }} className="w-full">
+    <div ref={ref} id={id} style={{ minHeight: height }} className="w-full">
       {isVisible ? children : null}
     </div>
   );

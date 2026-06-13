@@ -113,31 +113,65 @@ const ShaderCanvas = () => {
     glBgColorLocationRef.current = gl.getUniformLocation(program, 'uBackgroundColor');
     gl.uniform3fv(glBgColorLocationRef.current, new Float32Array(backgroundColor));
 
-    let animationFrameId: number;
-    const render = (time: number) => {
-      animationFrameId = requestAnimationFrame(render);
-      if (!isInViewRef.current) return;
-      gl.uniform1f(iTimeLoc, time * 0.001);
-      gl.uniform2f(iResLoc, canvas.width, canvas.height);
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
+    const getDpr = () => {
+      if (typeof window === 'undefined') return 1;
+      const isMobile = window.innerWidth < 768;
+      return isMobile ? 0.5 : Math.min(1.5, Math.max(1, window.devicePixelRatio * 0.75));
     };
+
     const handleResize = () => {
       // Size the WebGL canvas to the actual rendered element dimensions
       const rect = canvas.getBoundingClientRect();
-      const w = Math.round(rect.width);
-      const h = Math.round(rect.height);
+      const dpr = getDpr();
+      const w = Math.round(rect.width * dpr);
+      const h = Math.round(rect.height * dpr);
       canvas.width = w;
       canvas.height = h;
       gl.viewport(0, 0, w, h);
+      
+      // Do initial render
+      gl.uniform1f(iTimeLoc, performance.now() * 0.001);
+      gl.uniform2f(iResLoc, w, h);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
+
     handleResize();
     window.addEventListener('resize', handleResize);
-    animationFrameId = requestAnimationFrame(render);
+    
     return () => {
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
     };
   }, []);
+
+  // Strict animation loop based on visibility
+  useEffect(() => {
+    let animationFrameId: number;
+    const gl = glRef.current;
+    const program = glProgramRef.current;
+    
+    if (!gl || !program) return;
+    
+    const iTimeLoc = gl.getUniformLocation(program, 'iTime');
+    const iResLoc = gl.getUniformLocation(program, 'iResolution');
+
+    const render = (time: number) => {
+      if (!canvasRef.current) return;
+      gl.uniform1f(iTimeLoc, time * 0.001);
+      gl.uniform2f(iResLoc, canvasRef.current.width, canvasRef.current.height);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(render);
+    }
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [isInView]);
 
   return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full block z-0 pointer-events-none opacity-20" />;
 };

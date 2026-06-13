@@ -20,8 +20,9 @@ function LightningCanvas({ hoverProgress }: { hoverProgress: number }) {
     if (!ctx) return;
 
     const resize = () => {
-      canvas.width = canvas.clientWidth * 2;
-      canvas.height = canvas.clientHeight * 2;
+      const dpr = typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 2;
+      canvas.width = canvas.clientWidth * dpr;
+      canvas.height = canvas.clientHeight * dpr;
     };
     resize();
     window.addEventListener("resize", resize);
@@ -57,9 +58,8 @@ function LightningCanvas({ hoverProgress }: { hoverProgress: number }) {
     };
 
     const render = () => {
-      animRef.current = requestAnimationFrame(render);
-      if (!isInViewRef.current) return;
-
+      if (!canvasRef.current) return;
+      
       time += 0.016;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -114,15 +114,19 @@ function LightningCanvas({ hoverProgress }: { hoverProgress: number }) {
         ctx.fillStyle = `rgba(227, 198, 109, ${0.4 + hoverProgress * 0.3})`;
         ctx.fill();
       }
+      
+      animRef.current = requestAnimationFrame(render);
     };
 
-    render();
+    if (isInView) {
+      animRef.current = requestAnimationFrame(render);
+    }
 
     return () => {
-      cancelAnimationFrame(animRef.current);
+      if (animRef.current) cancelAnimationFrame(animRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [hoverProgress]);
+  }, [hoverProgress, isInView]);
 
   return (
     <canvas

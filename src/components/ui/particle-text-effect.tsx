@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useInView } from "framer-motion"
 
 interface Vector2D {
   x: number
@@ -141,12 +142,25 @@ interface ParticleTextEffectProps {
 const DEFAULT_WORDS = ["HELLO", "21st.dev", "ParticleTextEffect", "BY", "KAINXU"]
 
 export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffectProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(containerRef, { margin: "200px" })
+  const isInViewRef = useRef(isInView)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>(0)
   const particlesRef = useRef<Particle[]>([])
   const frameCountRef = useRef(0)
   const wordIndexRef = useRef(0)
   const mouseRef = useRef({ x: 0, y: 0, isPressed: false, isRightClick: false })
+
+  useEffect(() => {
+    isInViewRef.current = isInView
+    if (isInView) {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current)
+      animate()
+    } else {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current)
+    }
+  }, [isInView])
 
   const pixelSteps = 6
   const drawAsPoints = true
@@ -213,21 +227,24 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
       ;[coordsIndexes[i], coordsIndexes[j]] = [coordsIndexes[j], coordsIndexes[i]]
     }
 
-    for (const coordIndex of coordsIndexes) {
-      const pixelIndex = coordIndex
-      const alpha = pixels[pixelIndex + 3]
+    // Filter only active pixels and limit max count
+    let activePixelIndexes = coordsIndexes.filter(idx => pixels[idx + 3] > 0);
+    const maxParticles = typeof window !== 'undefined' && window.innerWidth < 768 ? 600 : 1500;
+    if (activePixelIndexes.length > maxParticles) {
+      activePixelIndexes = activePixelIndexes.slice(0, maxParticles);
+    }
 
-      if (alpha > 0) {
-        const x = (pixelIndex / 4) % canvas.width
-        const y = Math.floor(pixelIndex / 4 / canvas.width)
+    for (const pixelIndex of activePixelIndexes) {
+      const x = (pixelIndex / 4) % canvas.width
+      const y = Math.floor(pixelIndex / 4 / canvas.width)
 
-        let particle: Particle
+      let particle: Particle
 
-        if (particleIndex < particles.length) {
-          particle = particles[particleIndex]
-          particle.isKilled = false
-          particleIndex++
-        } else {
+      if (particleIndex < particles.length) {
+        particle = particles[particleIndex]
+        particle.isKilled = false
+        particleIndex++
+      } else {
           particle = new Particle()
 
           const randomPos = generateRandomPos(canvas.width / 2, canvas.height / 2, (canvas.width + canvas.height) / 2)
@@ -253,7 +270,6 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
 
         particle.target.x = x
         particle.target.y = y
-      }
     }
 
     // Kill remaining particles
@@ -262,7 +278,7 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
     }
   }
 
-  const animate = () => {
+  function animate() {
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -311,7 +327,9 @@ export function ParticleTextEffect({ words = DEFAULT_WORDS }: ParticleTextEffect
       nextWord(words[wordIndexRef.current], canvas)
     }
 
-    animationRef.current = requestAnimationFrame(animate)
+    if (isInViewRef.current) {
+      animationRef.current = requestAnimationFrame(animate)
+    }
   }
 
   useEffect(() => {

@@ -266,11 +266,17 @@ void main(){gl_Position=position;}`;
     }
   }
 
+  const getDpr = () => {
+    if (typeof window === 'undefined') return 1;
+    const isMobile = window.innerWidth < 768;
+    return isMobile ? 0.5 : Math.min(1.5, Math.max(1, window.devicePixelRatio * 0.75));
+  };
+
   const resize = () => {
     if (!canvasRef.current) return;
     
     const canvas = canvasRef.current;
-    const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
+    const dpr = getDpr();
     
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
@@ -280,22 +286,12 @@ void main(){gl_Position=position;}`;
     }
   };
 
-  const loop = (now: number) => {
-    animationFrameRef.current = requestAnimationFrame(loop);
-    if (!rendererRef.current || !pointersRef.current || !isInViewRef.current) return;
-    
-    rendererRef.current.updateMouse(pointersRef.current.first);
-    rendererRef.current.updatePointerCount(pointersRef.current.count);
-    rendererRef.current.updatePointerCoords(pointersRef.current.coords);
-    rendererRef.current.updateMove(pointersRef.current.move);
-    rendererRef.current.render(now);
-  };
-
+  // Setup WebGL once
   useEffect(() => {
     if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
-    const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
+    const dpr = getDpr();
     
     rendererRef.current = new WebGLRenderer(canvas, dpr);
     pointersRef.current = new PointerHandler(canvas, dpr);
@@ -309,20 +305,45 @@ void main(){gl_Position=position;}`;
       rendererRef.current.updateShader(defaultShaderSource);
     }
     
-    loop(0);
+    // Do one initial render
+    rendererRef.current.render(0);
     
     window.addEventListener('resize', resize);
     
     return () => {
       window.removeEventListener('resize', resize);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
       if (rendererRef.current) {
         rendererRef.current.reset();
       }
     };
   }, []);
+
+  // Manage Animation Frame strictly based on visibility
+  useEffect(() => {
+    let animationFrameId: number;
+
+    const loop = (now: number) => {
+      if (!rendererRef.current || !pointersRef.current) return;
+      
+      rendererRef.current.updateMouse(pointersRef.current.first);
+      rendererRef.current.updatePointerCount(pointersRef.current.count);
+      rendererRef.current.updatePointerCoords(pointersRef.current.coords);
+      rendererRef.current.updateMove(pointersRef.current.move);
+      rendererRef.current.render(now);
+
+      animationFrameId = requestAnimationFrame(loop);
+    };
+
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(loop);
+    }
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [isInView]);
 
   return { canvasRef };
 };
