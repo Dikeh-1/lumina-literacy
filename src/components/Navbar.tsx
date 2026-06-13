@@ -40,11 +40,11 @@ export default function Navbar() {
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
           scrolled
-            ? "py-2 bg-[#FFFCF7]/80 backdrop-blur-xl shadow-[0_1px_30px_rgba(27,45,94,0.08)] border-b border-[#C9A84C]/10"
-            : "py-3 bg-white/5 backdrop-blur-md border-b border-white/10"
+            ? "py-1 lg:py-2 bg-[#FFFCF7]/80 backdrop-blur-xl shadow-[0_1px_30px_rgba(27,45,94,0.08)] border-b border-[#C9A84C]/10"
+            : "py-2 lg:py-3 bg-white/5 backdrop-blur-md border-b border-white/10"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-12 flex items-center justify-between">
           {/* Logo */}
           <motion.a
             href="#home"
@@ -55,7 +55,7 @@ export default function Navbar() {
             <motion.img
               src="/images/lumina-logo-nav.png"
               alt="Lumina Literacy Solutions"
-              animate={{ height: scrolled ? 40 : 56 }}
+              animate={{ height: scrolled ? 32 : 44 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="w-auto"
             />
