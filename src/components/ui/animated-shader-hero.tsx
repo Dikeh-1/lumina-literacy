@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect } from 'react';
+import { useInView } from 'framer-motion';
 
 // Types for component props
 export interface HeroProps {
@@ -32,6 +33,13 @@ const useShaderBackground = () => {
   const animationFrameRef = useRef<number>(0);
   const rendererRef = useRef<WebGLRenderer | null>(null);
   const pointersRef = useRef<PointerHandler | null>(null);
+
+  const isInView = useInView(canvasRef, { margin: "200px" });
+  const isInViewRef = useRef(isInView);
+
+  useEffect(() => {
+    isInViewRef.current = isInView;
+  }, [isInView]);
 
   // WebGL Renderer class
   class WebGLRenderer {
@@ -273,14 +281,14 @@ void main(){gl_Position=position;}`;
   };
 
   const loop = (now: number) => {
-    if (!rendererRef.current || !pointersRef.current) return;
+    animationFrameRef.current = requestAnimationFrame(loop);
+    if (!rendererRef.current || !pointersRef.current || !isInViewRef.current) return;
     
     rendererRef.current.updateMouse(pointersRef.current.first);
     rendererRef.current.updatePointerCount(pointersRef.current.count);
     rendererRef.current.updatePointerCoords(pointersRef.current.coords);
     rendererRef.current.updateMove(pointersRef.current.move);
     rendererRef.current.render(now);
-    animationFrameRef.current = requestAnimationFrame(loop);
   };
 
   useEffect(() => {

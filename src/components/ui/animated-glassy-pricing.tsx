@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useInView } from 'framer-motion';
 import { RippleButton } from "./multi-type-ripple-buttons";
 
 // --- Internal Helper Components (Not exported) --- //
@@ -21,6 +22,12 @@ const ShaderCanvas = () => {
   const glBgColorLocationRef = useRef<WebGLUniformLocation | null>(null);
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const [backgroundColor, setBackgroundColor] = useState([0.984, 0.973, 0.949]); // #FBF8F2 Cream
+  const isInView = useInView(canvasRef, { margin: "200px" });
+  const isInViewRef = useRef(isInView);
+
+  useEffect(() => {
+    isInViewRef.current = isInView;
+  }, [isInView]);
 
   useEffect(() => {
     const gl = glRef.current;
@@ -106,10 +113,11 @@ const ShaderCanvas = () => {
 
     let animationFrameId: number;
     const render = (time: number) => {
+      animationFrameId = requestAnimationFrame(render);
+      if (!isInViewRef.current) return;
       gl.uniform1f(iTimeLoc, time * 0.001);
       gl.uniform2f(iResLoc, canvas.width, canvas.height);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      animationFrameId = requestAnimationFrame(render);
     };
     const handleResize = () => {
       canvas.width = window.innerWidth;

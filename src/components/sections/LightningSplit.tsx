@@ -1,11 +1,17 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { BookOpen, Star, Heart, Users, Sparkles } from "lucide-react";
 
 // Lightning shader canvas for the electric divider
 function LightningCanvas({ hoverProgress }: { hoverProgress: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
+  const isInView = useInView(canvasRef, { margin: "200px" });
+  const isInViewRef = useRef(isInView);
+
+  useEffect(() => {
+    isInViewRef.current = isInView;
+  }, [isInView]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,6 +57,9 @@ function LightningCanvas({ hoverProgress }: { hoverProgress: number }) {
     };
 
     const render = () => {
+      animRef.current = requestAnimationFrame(render);
+      if (!isInViewRef.current) return;
+
       time += 0.016;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -105,8 +114,6 @@ function LightningCanvas({ hoverProgress }: { hoverProgress: number }) {
         ctx.fillStyle = `rgba(227, 198, 109, ${0.4 + hoverProgress * 0.3})`;
         ctx.fill();
       }
-
-      animRef.current = requestAnimationFrame(render);
     };
 
     render();
