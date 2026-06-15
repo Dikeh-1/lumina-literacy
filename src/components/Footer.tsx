@@ -134,12 +134,10 @@ export default function Footer() {
                 if (!email || subStatus === 'loading') return;
                 setSubStatus('loading');
                 try {
-                  // NestJS backend: POST /subscribers {email}
-                  const response = await fetch('https://api.talesandtreasures.com.ng/subscribers', {
+                  const response = await fetch('/api/proxy/newsletter', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email }),
-                    mode: 'cors',
                   });
                   if (response.ok || response.status === 201) {
                     setSubStatus('ok');

@@ -9,4 +9,18 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  server: {
+    proxy: {
+      '/api/proxy/messages': {
+        target: 'https://api.talesandtreasures.com.ng/messages',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/proxy\/messages/, '')
+      },
+      '/api/proxy/newsletter': {
+        target: 'https://talesandtreasures-backend-production.up.railway.app/api/newsletter/subscribe',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/proxy\/newsletter/, '')
+      }
+    }
+  }
 });

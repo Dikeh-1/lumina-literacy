@@ -41,9 +41,9 @@ export function PartnerFormModal() {
     setStatus('loading');
     
     try {
-      // Replace with actual API URL or environment variable
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://api.talesandtreasures.com.ng';
-      const response = await fetch(`${apiUrl}/messages`, {
+      // Use the internal Vercel/Vite proxy to bypass CORS
+      const apiUrl = '/api/proxy/messages';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

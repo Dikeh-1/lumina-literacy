@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/proxy/messages",
+      "destination": "https://api.talesandtreasures.com.ng/messages"
+    },
+    {
+      "source": "/api/proxy/newsletter",
+      "destination": "https://talesandtreasures-backend-production.up.railway.app/api/newsletter/subscribe"
+    }
+  ]
+}
