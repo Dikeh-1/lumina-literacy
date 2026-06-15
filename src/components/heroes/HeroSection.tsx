@@ -21,7 +21,7 @@ export default function HeroSection() {
           primary: {
             text: "Partner With Us",
             onClick: () => {
-              window.dispatchEvent(new CustomEvent('show-maintenance'));
+              window.dispatchEvent(new CustomEvent('show-partner-form'));
             },
           },
           secondary: {

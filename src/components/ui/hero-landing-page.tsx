@@ -59,7 +59,7 @@ export function TuringLanding() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <button 
-                onClick={() => window.dispatchEvent(new CustomEvent('show-maintenance'))}
+                onClick={() => window.dispatchEvent(new CustomEvent('show-partner-form'))}
                 className="flex items-center justify-center gap-2.5 text-[#101B38] py-4 px-8 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(201,168,76,0.2)] hover:shadow-[0_0_30px_rgba(201,168,76,0.4)]"
                 style={{ background: "linear-gradient(135deg, #E3C66D, #C9A84C)" }}
               >

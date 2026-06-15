@@ -65,7 +65,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:block flex-shrink-0">
             <button
-              onClick={() => window.dispatchEvent(new CustomEvent("show-maintenance"))}
+              onClick={() => window.dispatchEvent(new CustomEvent("show-partner-form"))}
               className="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold tracking-wide rounded-full transition-all duration-200 hover:opacity-90 hover:shadow-[0_4px_20px_rgba(201,168,76,0.35)]"
               style={{ background: "linear-gradient(135deg, #C9A84C, #A88426)", color: "#FFFCF7" }}
             >
@@ -138,7 +138,7 @@ export default function Navbar() {
                 <button
                   onClick={() => {
                     setMobileOpen(false);
-                    window.dispatchEvent(new CustomEvent("show-maintenance"));
+                    window.dispatchEvent(new CustomEvent("show-partner-form"));
                   }}
                   className="flex items-center justify-center gap-2 w-full px-6 py-4 text-base font-semibold tracking-wide rounded-full text-[#101B38] transition-all duration-200 hover:opacity-90"
                   style={{ background: "linear-gradient(135deg, #E3C66D, #C9A84C)" }}
