@@ -6,7 +6,7 @@
     },
     {
       "source": "/api/proxy/newsletter",
-      "destination": "https://talesandtreasures-backend-production.up.railway.app/api/newsletter/subscribe"
+      "destination": "https://api.talesandtreasures.com.ng/subscribers"
     }
   ]
 }

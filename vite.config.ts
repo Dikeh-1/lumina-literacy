@@ -17,7 +17,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api\/proxy\/messages/, '')
       },
       '/api/proxy/newsletter': {
-        target: 'https://talesandtreasures-backend-production.up.railway.app/api/newsletter/subscribe',
+        target: 'https://api.talesandtreasures.com.ng/subscribers',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/proxy\/newsletter/, '')
       }

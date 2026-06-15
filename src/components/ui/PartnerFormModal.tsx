@@ -8,6 +8,7 @@ export function PartnerFormModal() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: 'Partnership Inquiry from Lumina Literacy',
     content: ''
   });
@@ -16,7 +17,7 @@ export function PartnerFormModal() {
     const showEvent = () => {
       setIsOpen(true);
       setStatus('idle');
-      setFormData(prev => ({ ...prev, name: '', email: '', content: '' }));
+      setFormData(prev => ({ ...prev, name: '', email: '', phone: '', content: '' }));
     };
     window.addEventListener('show-partner-form', showEvent);
     return () => window.removeEventListener('show-partner-form', showEvent);
@@ -51,6 +52,7 @@ export function PartnerFormModal() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
+          phone: formData.phone || "Not Provided",
           subject: formData.subject,
           message: formData.content, // Maps to the standard Tales & Treasures DTO
         }),
@@ -143,19 +145,35 @@ export function PartnerFormModal() {
                     />
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label htmlFor="email" className="text-sm font-semibold text-[#1B2D5E]">Email Address</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      disabled={status === 'loading'}
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Enter your email address"
-                      className="w-full px-4 py-3 rounded-xl border border-[#1B2D5E]/10 bg-[#FBF8F2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/50 focus:border-[#C9A84C] transition-all text-[#1B2D5E] disabled:opacity-60"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label htmlFor="email" className="text-sm font-semibold text-[#1B2D5E]">Email Address</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        disabled={status === 'loading'}
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="you@company.com"
+                        className="w-full px-4 py-3 rounded-xl border border-[#1B2D5E]/10 bg-[#FBF8F2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/50 focus:border-[#C9A84C] transition-all text-[#1B2D5E] disabled:opacity-60"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label htmlFor="phone" className="text-sm font-semibold text-[#1B2D5E]">Phone Number</label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        required
+                        disabled={status === 'loading'}
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="+234 XXX XXXX"
+                        className="w-full px-4 py-3 rounded-xl border border-[#1B2D5E]/10 bg-[#FBF8F2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/50 focus:border-[#C9A84C] transition-all text-[#1B2D5E] disabled:opacity-60"
+                      />
+                    </div>
                   </div>
 
                   <div className="space-y-1.5">
