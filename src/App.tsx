@@ -6,6 +6,7 @@ import { UnderMaintenanceModal } from "./components/ui/UnderMaintenanceModal";
 import { CookieConsent } from "./components/ui/CookieConsent";
 import { SchoolAdoptionModal } from "./components/ui/SchoolAdoptionModal";
 import { StoryBridgesModal } from "./components/ui/StoryBridgesModal";
+import { TeacherWorkshopModal } from "./components/ui/TeacherWorkshopModal";
 import { PartnerFormModal } from "./components/ui/PartnerFormModal";
 import { ScrollIndicator } from "./components/ui/ScrollIndicator";
 import { LazySection } from "./components/ui/LazySection";
@@ -111,6 +112,7 @@ export default function App() {
       <CookieConsent />
       <SchoolAdoptionModal />
       <StoryBridgesModal />
+      <TeacherWorkshopModal />
       <PartnerFormModal />
       <ScrollIndicator />
       <Navbar />

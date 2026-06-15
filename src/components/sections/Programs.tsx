@@ -28,7 +28,7 @@ export default function Programs() {
       ],
       buttonText: "Register Now",
       buttonVariant: "secondary" as const,
-      href: "https://forms.gle/mp8JQCxRMCcEx5SJA",
+      onClick: () => window.dispatchEvent(new CustomEvent('show-teacher-workshop')),
     },
     {
       planName: "StoryBridges Kit",
