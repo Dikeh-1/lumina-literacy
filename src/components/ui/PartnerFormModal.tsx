@@ -54,7 +54,7 @@ export function PartnerFormModal() {
           email: formData.email,
           phone: formData.phone || "Not Provided",
           subject: formData.subject,
-          message: formData.content, // Maps to the standard Tales & Treasures DTO
+          message: `[LUMINA LITERACY PARTNERSHIP REQUEST]\n\n${formData.content}`, // Maps to the standard Tales & Treasures DTO
         }),
       });
 
