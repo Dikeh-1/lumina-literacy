@@ -66,13 +66,12 @@ export function TuringLanding() {
                 Become a partner
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <a 
-                href="/brochure-sample.html"
-                target="_blank"
+              <button 
+                onClick={() => window.dispatchEvent(new CustomEvent('show-brochure-form'))}
                 className="bg-[#101B38]/60 backdrop-blur-md border border-[#C9A84C]/30 text-[#FFFCF7] py-4 px-8 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:border-[#C9A84C]/60 hover:scale-105 inline-block text-center"
               >
                 Download CSR Brochure
-              </a>
+              </button>
             </div>
           </div>
 

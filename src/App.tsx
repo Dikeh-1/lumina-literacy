@@ -4,6 +4,7 @@ import HeroSection from "./components/heroes/HeroSection";
 import Footer from "./components/Footer";
 import { UnderMaintenanceModal } from "./components/ui/UnderMaintenanceModal";
 import { CookieConsent } from "./components/ui/CookieConsent";
+import { BrochureFormModal } from "./components/ui/BrochureFormModal";
 import { ScrollIndicator } from "./components/ui/ScrollIndicator";
 import { LazySection } from "./components/ui/LazySection";
 
@@ -106,6 +107,7 @@ export default function App() {
 
       <UnderMaintenanceModal />
       <CookieConsent />
+      <BrochureFormModal />
       <ScrollIndicator />
       <Navbar />
 
