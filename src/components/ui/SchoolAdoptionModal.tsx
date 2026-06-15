@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
-export function ContactFormModal() {
+export function SchoolAdoptionModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const showEvent = () => setIsOpen(true);
-    window.addEventListener('show-contact-form', showEvent);
-    return () => window.removeEventListener('show-contact-form', showEvent);
+    window.addEventListener('show-school-adoption', showEvent);
+    return () => window.removeEventListener('show-school-adoption', showEvent);
   }, []);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export function ContactFormModal() {
             {/* Header */}
             <div className="flex items-center justify-between p-4 sm:p-6 border-b border-[#1B2D5E]/10 bg-white">
               <h3 className="text-xl sm:text-2xl font-bold text-[#1B2D5E]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                Partner With Us
+                School Adoption
               </h3>
               <button
                 onClick={() => setIsOpen(false)}
@@ -58,12 +58,12 @@ export function ContactFormModal() {
             {/* Form Content (Iframe container) */}
             <div className="flex-1 overflow-y-auto overflow-x-hidden p-0 m-0 bg-white relative w-full h-full -webkit-overflow-scrolling-touch">
               <iframe 
-                src="https://docs.google.com/forms/d/e/1FAIpQLSfgVmvDLwjk1xi60wWsZaxtuqwiKcrqpYT5CHvQrxj4LhT0sg/viewform?embedded=true" 
-                className="w-full h-full min-h-[1555px] sm:min-h-[1200px]"
+                src="https://docs.google.com/forms/d/e/1FAIpQLSfB0OmcTTi0t8i74HNs2hry7TlDfjxoSsQX3aE2f8zaUsp7IA/viewform?embedded=true" 
+                className="w-full h-full min-h-[1981px] sm:min-h-[1500px]"
                 frameBorder="0" 
                 marginHeight={0} 
                 marginWidth={0}
-                title="Lumina CSR Brochure Request Form"
+                title="Lumina School Adoption Request Form"
               >
                 Loading…
               </iframe>

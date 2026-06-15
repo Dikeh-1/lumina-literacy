@@ -153,10 +153,12 @@ export interface PricingCardProps {
   buttonText: string;
   isPopular?: boolean;
   buttonVariant?: 'primary' | 'secondary';
+  href?: string;
+  onClick?: () => void;
 }
 
 export const PricingCard = ({
-  planName, description, price, features, buttonText, isPopular = false, buttonVariant = 'primary'
+  planName, description, price, features, buttonText, isPopular = false, buttonVariant = 'primary', href, onClick
 }: PricingCardProps) => {
   const cardClasses = `
     backdrop-blur-[14px] rounded-2xl shadow-xl flex-1 w-full max-w-[340px] md:max-w-xs mx-auto md:mx-0 px-7 py-8 flex flex-col transition-all duration-300
@@ -209,7 +211,15 @@ export const PricingCard = ({
       </ul>
       <RippleButton 
         className={buttonClasses.trim()}
-        onClick={() => window.dispatchEvent(new CustomEvent('show-contact-form'))}
+        onClick={() => {
+          if (onClick) {
+            onClick();
+          } else if (href) {
+            window.open(href, '_blank');
+          } else {
+            window.dispatchEvent(new CustomEvent('show-maintenance'));
+          }
+        }}
       >
         {buttonText}
       </RippleButton>

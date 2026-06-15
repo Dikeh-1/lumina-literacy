@@ -229,7 +229,7 @@ export default function Footer() {
               social.action === "maintenance" ? (
                 <button
                   key={social.label}
-                  onClick={() => window.dispatchEvent(new CustomEvent('show-contact-form'))}
+                  onClick={() => window.dispatchEvent(new CustomEvent('show-maintenance'))}
                   aria-label={social.label}
                   className="w-9 h-9 rounded-full border border-white/[0.08] flex items-center justify-center text-[#FFFCF7]/30 hover:text-[#C9A84C] hover:border-[#C9A84C]/30 transition-all duration-300"
                 >
