@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import { UnderMaintenanceModal } from "./components/ui/UnderMaintenanceModal";
 import { CookieConsent } from "./components/ui/CookieConsent";
 import { SchoolAdoptionModal } from "./components/ui/SchoolAdoptionModal";
+import { StoryBridgesModal } from "./components/ui/StoryBridgesModal";
 import { ScrollIndicator } from "./components/ui/ScrollIndicator";
 import { LazySection } from "./components/ui/LazySection";
 
@@ -108,6 +109,7 @@ export default function App() {
       <UnderMaintenanceModal />
       <CookieConsent />
       <SchoolAdoptionModal />
+      <StoryBridgesModal />
       <ScrollIndicator />
       <Navbar />
 

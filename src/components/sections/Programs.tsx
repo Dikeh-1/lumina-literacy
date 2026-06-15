@@ -29,7 +29,7 @@ export default function Programs() {
       ],
       buttonText: "Get the Kit",
       buttonVariant: "primary" as const,
-      href: "https://forms.gle/Q9Z59Z5SsC69XLGCA",
+      onClick: () => window.dispatchEvent(new CustomEvent('show-story-bridges')),
     },
     {
       planName: "School Adoption",
