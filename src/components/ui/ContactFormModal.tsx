@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
-export function BrochureFormModal() {
+export function ContactFormModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const showEvent = () => setIsOpen(true);
-    window.addEventListener('show-brochure-form', showEvent);
-    return () => window.removeEventListener('show-brochure-form', showEvent);
+    window.addEventListener('show-contact-form', showEvent);
+    return () => window.removeEventListener('show-contact-form', showEvent);
   }, []);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export function BrochureFormModal() {
             {/* Header */}
             <div className="flex items-center justify-between p-4 sm:p-6 border-b border-[#1B2D5E]/10 bg-white">
               <h3 className="text-xl sm:text-2xl font-bold text-[#1B2D5E]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                Download CSR Brochure
+                Partner With Us
               </h3>
               <button
                 onClick={() => setIsOpen(false)}

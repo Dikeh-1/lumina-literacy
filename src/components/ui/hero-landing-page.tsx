@@ -59,19 +59,20 @@ export function TuringLanding() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <button 
-                onClick={() => window.dispatchEvent(new CustomEvent('show-maintenance'))}
+                onClick={() => window.dispatchEvent(new CustomEvent('show-contact-form'))}
                 className="flex items-center justify-center gap-2.5 text-[#101B38] py-4 px-8 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(201,168,76,0.2)] hover:shadow-[0_0_30px_rgba(201,168,76,0.4)]"
                 style={{ background: "linear-gradient(135deg, #E3C66D, #C9A84C)" }}
               >
                 Become a partner
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <button 
-                onClick={() => window.dispatchEvent(new CustomEvent('show-brochure-form'))}
+              <a 
+                href="/brochure-sample.html"
+                target="_blank"
                 className="bg-[#101B38]/60 backdrop-blur-md border border-[#C9A84C]/30 text-[#FFFCF7] py-4 px-8 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:border-[#C9A84C]/60 hover:scale-105 inline-block text-center"
               >
                 Download CSR Brochure
-              </button>
+              </a>
             </div>
           </div>
 
