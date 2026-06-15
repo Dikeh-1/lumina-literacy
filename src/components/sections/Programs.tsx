@@ -3,6 +3,20 @@ import { ModernPricingPage } from "../ui/animated-glassy-pricing";
 export default function Programs() {
   const pricingPlans = [
     {
+      planName: "Summer Reading",
+      description: "Engage students over the break with our specialized reading camp.",
+      price: "₦15,000",
+      features: [
+        "Interactive reading sessions",
+        "Weekly reading challenges",
+        "Reading comprehension exercises",
+        "Certificate of completion"
+      ],
+      buttonText: "Join Camp",
+      buttonVariant: "secondary" as const,
+      href: "https://docs.google.com/forms/d/e/1FAIpQLSfgVmvDLwjk1xi60wWsZaxtuqwiKcrqpYT5CHvQrxj4LhT0sg/viewform?usp=publish-editor",
+    },
+    {
       planName: "Teacher Workshop",
       description: "Empowering educators with culturally responsive pedagogy.",
       price: "₦25,000",
@@ -45,20 +59,6 @@ export default function Programs() {
       buttonText: "Partner With Us",
       buttonVariant: "secondary" as const,
       onClick: () => window.dispatchEvent(new CustomEvent('show-school-adoption')),
-    },
-    {
-      planName: "Summer Reading",
-      description: "Engage students over the break with our specialized reading camp.",
-      price: "₦15,000",
-      features: [
-        "Interactive reading sessions",
-        "Weekly reading challenges",
-        "Reading comprehension exercises",
-        "Certificate of completion"
-      ],
-      buttonText: "Join Camp",
-      buttonVariant: "secondary" as const,
-      href: "https://docs.google.com/forms/d/e/1FAIpQLSfgVmvDLwjk1xi60wWsZaxtuqwiKcrqpYT5CHvQrxj4LhT0sg/viewform?usp=publish-editor",
     }
   ];
 
