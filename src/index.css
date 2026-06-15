@@ -29,6 +29,14 @@
     @apply font-sans;
     overflow-x: hidden;
     max-width: 100vw;
+    /* Prevent scroll anchoring jumps */
+    overflow-anchor: none;
+  }
+
+  /* Massively improve scroll performance by skipping rendering of offscreen sections */
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
   }
 
   body {
@@ -106,10 +114,14 @@
   /* Animations */
   .animate-marquee {
     animation: marquee 40s linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .animate-marquee-reverse {
     animation: marquee-reverse 40s linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .animate-float {
@@ -137,8 +149,8 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%, 100% { transform: translateY(0px) translateZ(0); }
+  50% { transform: translateY(-20px) translateZ(0); }
 }
 
 @keyframes pulse-glow {
@@ -233,18 +245,18 @@
   }
   @keyframes brightness {
   0% {
-    filter: brightness(1) contrast(1);
+    filter: brightness(1);
     }
   100% {
-    filter: brightness(0.8) contrast(1.3);
+    filter: brightness(0.8);
     }
   }
   @keyframes text-glow {
   0%, 100% {
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    opacity: 0.8;
     }
   50% {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    opacity: 1;
     }
   }
 }
@@ -322,7 +334,7 @@
 .hero-section .container { perspective: 1000px; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
 .hero-section .content { position: relative; transform-origin: center center; }
 .hero-section .container-full { position: absolute; top: 0; left: 0; right: 0; bottom: 0; transform-style: preserve-3d; }
-.hero-section .backgroundImage { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; animation: zoom-in 20s linear infinite, brightness 10s infinite alternate, blur 5s infinite alternate; }
+.hero-section .backgroundImage { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; animation: zoom-in 30s linear infinite alternate; will-change: transform; transform: translateZ(0); }
 .hero-section .boyImage { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 90%; object-fit: contain; z-index: 10; filter: drop-shadow(0 0 20px rgba(0,0,0,0.8)); mix-blend-mode: multiply; }
 .hero-section .cube { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; z-index: 2; }
 .hero-section .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; overflow: hidden; }
